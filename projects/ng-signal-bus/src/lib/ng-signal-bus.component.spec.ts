@@ -8,7 +8,11 @@ describe('NgSignalBusComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+<<<<<<< HEAD
       declarations: [ NgSignalBusComponent ]
+=======
+      imports: [NgSignalBusComponent]
+>>>>>>> origin/master
     })
     .compileComponents();
 

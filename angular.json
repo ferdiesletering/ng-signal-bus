@@ -33,6 +33,7 @@
               "zone.js/testing"
             ]
           }
+<<<<<<< HEAD
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -50,5 +51,10 @@
     "schematicCollections": [
       "@angular-eslint/schematics"
     ]
+=======
+        }
+      }
+    }
+>>>>>>> origin/master
   }
 }
