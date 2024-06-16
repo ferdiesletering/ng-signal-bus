@@ -10,6 +10,11 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
+    "paths": {
+      "ng-signal-bus": [
+        "./dist/ng-signal-bus"
+      ]
+    },
     "esModuleInterop": true,
     "sourceMap": true,
     "declaration": false,
