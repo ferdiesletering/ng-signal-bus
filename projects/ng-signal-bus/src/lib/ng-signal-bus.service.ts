@@ -52,7 +52,7 @@ export class SignalBusService {
       () => {
         const data = this.eventBus();
 
-        if (this.matchQuery(data.key, query)) {
+        if (this.matchQuery(data.key, query) && data.metaData.timestamp > 0) {
           untracked(() => callback(data.metaData));
         }
       },
