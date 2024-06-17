@@ -21,7 +21,7 @@ jobs:
         run: npm ci
 
       - name: Run Tests and Collect Coverage
-        run: npm run test
+        run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI --code-coverage
 
       - name: Build Library
         run: npm run build ng-signal-bus -- --configuration=production
