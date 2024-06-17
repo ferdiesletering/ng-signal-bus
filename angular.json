@@ -33,28 +33,8 @@
               "zone.js/testing"
             ]
           }
-<<<<<<< HEAD
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "projects/ng-signal-bus/**/*.ts",
-              "projects/ng-signal-bus/**/*.html"
-            ]
-          }
         }
       }
     }
-  },
-  "cli": {
-    "schematicCollections": [
-      "@angular-eslint/schematics"
-    ]
-=======
-        }
-      }
-    }
->>>>>>> origin/master
   }
 }
