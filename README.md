@@ -13,6 +13,13 @@ Note: Only tested with Angular v18.
 - Widget A updates Widgets B anywhere in the application
 - Logger
 
+
+## Playground
+
+Try out:
+
+[Stackblitz](https://stackblitz.com/edit/stackblitz-starters-ahglvf?file=src%2Fapp%2Fwidget-add-grocery-items%2Fwidget-add-grocery-items.component.html)
+
 # Installation
 
 ```
