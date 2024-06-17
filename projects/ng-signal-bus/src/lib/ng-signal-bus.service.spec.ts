@@ -19,6 +19,20 @@ describe('SignalBusService', () => {
     }).toThrow(new Error('Index cannot be empty'));
   });
 
+  it('should throw error when data is empty', () => {
+    expect(() => {
+      service.publish('sport', '');
+    }).toThrow(new Error('Data cannot be empty'));
+
+    expect(() => {
+      service.publish('sport', {});
+    }).toThrow(new Error('Data cannot be empty'));
+
+    expect(() => {
+      service.publish('sport', []);
+    }).toThrow(new Error('Data cannot be empty'));
+  });
+
   it('Send and listen to eventBus', fakeAsync(() => {
     let metaData: MetaData = { data: {}, timestamp: 0};
     service.subscribe('sport', data => {
@@ -31,10 +45,10 @@ describe('SignalBusService', () => {
   }));
 
   it('Wildcards with matchquery', () => {
-    expect(service.matchQuery('sport', 'sport')).toBeTruthy()
-    expect(service.matchQuery('sport', 'sports')).toBeFalsy()
-    expect(service.matchQuery('anyValue', '*')).toBeTruthy()
-    expect(service.matchQuery('sports:soccer', 'sports:*')).toBeTruthy()
+    expect((service as any).matchQuery('sport', 'sport')).toBeTruthy()
+    expect((service as any).matchQuery('sport', 'sports')).toBeFalsy()
+    expect((service as any).matchQuery('anyValue', '*')).toBeTruthy()
+    expect((service as any).matchQuery('sports:soccer', 'sports:*')).toBeTruthy()
   });
 
   it('Send and listen to eventBus with wildcards', fakeAsync(() => {

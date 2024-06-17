@@ -1,24 +1,106 @@
-# NgSignalBus
+# SignalBus
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.0.
+Angular signal based message/event bus service for Angular.
+Under the hood it's using a signal to store and mutate data, the effect() calls the callback function to update subscribers.
 
-## Code scaffolding
+Note: Only tested with Angular v18.
 
-Run `ng generate component component-name --project ng-signal-bus` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ng-signal-bus`.
-> Note: Don't forget to add `--project ng-signal-bus` or else it will be added to the default project in your `angular.json` file. 
+## Use cases
 
-## Build
+- Communication between component without a state library, just straightforward communication.
+- Widget A updates Widgets B anywhere in the application
+- Logger
 
-Run `ng build ng-signal-bus` to build the project. The build artifacts will be stored in the `dist/` directory.
+# Installation
 
-## Publishing
+```
+npm install --save ng-signal-bus
+```
 
-After building your library with `ng build ng-signal-bus`, go to the dist folder `cd dist/ng-signal-bus` and run `npm publish`.
+# Usage
 
-## Running unit tests
+## Basic implementation
 
-Run `ng test ng-signal-bus` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```
+import { SignalBusService } from 'ng-signal-bus' 
 
-## Further help
+@Component({
+  selector: 'app-widget-add-grocery-items',
+  standalone: true,
+})
+export class WidgetAddGroceryItemsComponent {
+  signalBus = inject(SignalBusService)
+}
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```
+
+## Publish
+```
+import { SignalBusService } from 'ng-signal-bus' 
+
+@Component({
+  selector: 'app-widget-add-grocery-items',
+  standalone: true,
+})
+export class WidgetAddGroceryItemsComponent {
+  signalBus = inject(SignalBusService)
+
+  constructor() {
+    this.publish('grocerylist:add', 'Banana')
+  }
+
+  publish(key:string, data: any) {
+    this.signalBus.publish(key, data)
+  }
+}
+```
+
+## Subscribe
+
+```
+import { SignalBusService } from 'ng-signal-bus' 
+
+@Component({
+  selector: 'app-widget-add-grocery-items',
+  standalone: true,
+})
+export class WidgetAddGroceryItemsComponent {
+  signalBus = inject(SignalBusService)
+
+  ngOnInit() {
+     this.signalBus.subscribe('grocerylist:add', (metaData) => {
+      // Outputs { data: 'Banana', timestamp: 1434342 }
+      console.log(metaData);
+    });
+  }
+}
+```
+
+# Set signal values inside the callback
+
+The callback function runs in the effect() excecution context which not allow to update/write to any signals.
+To allow this, untracked is used. Untracked will run the function without creating dependencies.
+
+```
+untracked(() => callback(data.metaData));
+```
+
+## Example
+
+```
+import { model } from '@angular/core';
+
+items = model<Item[]>([]);
+
+addItem(title: string = '') {
+    this.items.update((items: Item[]) => {
+      return [...items, { title }];
+    });
+}
+
+ngOnInit() {
+  this.signalBus.subscribe('*', (metaData) => {
+    this.addItem(metaData.data);
+  });
+}
+```

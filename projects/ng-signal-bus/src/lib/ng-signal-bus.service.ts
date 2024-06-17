@@ -1,4 +1,4 @@
-import { Injectable, Injector, effect, signal } from '@angular/core';
+import { Injectable, Injector, effect, signal, untracked } from '@angular/core';
 
 export interface MetaData {
   data: any;
@@ -24,13 +24,15 @@ export class SignalBusService {
   publish(index: string, data: any) {
     if(index.length === 0) throw new Error('Index cannot be empty');
 
+    if( data.length === 0 || Object.keys(data).length === 0 ) throw new Error('Data cannot be empty');
+
     this.eventBus.set({
       key: index,
       metaData: { data: data, timestamp: new Date().getTime() },
     });
   }
 
-  matchQuery(key:string, query: string) {
+  private matchQuery(key:string, query: string) {
     if(key === query) return true;
 
     if( query === '*' ) return true
@@ -51,7 +53,7 @@ export class SignalBusService {
         const data = this.eventBus();
 
         if (this.matchQuery(data.key, query)) {
-          callback(data.metaData);
+          untracked(() => callback(data.metaData));
         }
       },
       { injector: this.injector }
