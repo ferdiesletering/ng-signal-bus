@@ -1,6 +1,6 @@
 {
   "name": "ng-signal-bus",
-  "version": "0.0.5",
+  "version": "0.2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/ferdiesletering/ng-signal-bus"
