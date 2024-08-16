@@ -1,13 +1,13 @@
 import { Injectable, Injector, effect, signal, untracked } from '@angular/core';
 
-export interface MetaData {
-  data: any;
+export interface MetaData<T> {
+  data: T;
   timestamp: number;
 }
 
 interface EventBus {
   key: string;
-  metaData: MetaData;
+  metaData: MetaData<any>;
 }
 
 @Injectable({
@@ -47,7 +47,7 @@ export class SignalBusService {
     return false;
   }
 
-  subscribe(query: string, callback: (metaData: MetaData) => void) {
+  subscribe<T>(query: string, callback: (metaData: MetaData<T>) => void) {
     effect(
       () => {
         const data = this.eventBus();

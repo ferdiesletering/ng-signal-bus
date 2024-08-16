@@ -34,7 +34,7 @@ describe('SignalBusService', () => {
   });
 
   it('Send and listen to eventBus', fakeAsync(() => {
-    let metaData: MetaData = { data: {}, timestamp: 0};
+    let metaData: MetaData<any> = { data: {}, timestamp: 0};
     service.subscribe('sport', data => {
       metaData = data;
     });
@@ -52,7 +52,7 @@ describe('SignalBusService', () => {
   });
 
   it('Send and listen to eventBus with wildcards', fakeAsync(() => {
-    let metaData: MetaData = { data: {}, timestamp: 0};
+    let metaData: MetaData<any> = { data: {}, timestamp: 0};
     service.subscribe('sport:*', data => {
       metaData = data;
     });
